@@ -1,0 +1,40 @@
+version: "3.9"
+
+volumes:
+  db-data:
+
+
+services:
+  backend:
+    image: cod3r-backend
+    restart: unless-stopped
+    build:
+      context: ./backend
+    volumes:
+      - ./backend:/home/node/app
+      - /node/app/node_modules
+    ports:
+      - "3000:3000"
+    links:
+      - db
+    depends_on:
+      - db
+    networks:
+      - cod3r-network
+  db:
+    image: postgres:15.3-alpine
+    container_name: db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: knowledge
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - cod3r-network
+networks:
+  cod3r-network:
+    driver: bridge
