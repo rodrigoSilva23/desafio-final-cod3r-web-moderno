@@ -9,7 +9,7 @@ exports.up = function(knex) {
     table.string("email").notNull();
     table.string("password").notNull();
     table.boolean("admin").defaultTo(false).notNull();
-    table.enu("status",["Active","Inactive"]).defaultTo("active").notNull();
+    table.enum("status",["active","inactive"]).defaultTo("Active");
     table.timestamp("created_at").defaultTo(knex.fn.now());
     table.timestamp("updated_at").defaultTo(knex.fn.now());
   })

@@ -16,6 +16,7 @@
     "body-parser": "1.18.3",
     "consign": "0.1.6",
     "cors": "2.8.4",
+    "dotenv": "^16.3.1",
     "express": "4.16.3",
     "jwt-simple": "0.5.1",
     "knex": "^2.5.0",
@@ -25,7 +26,8 @@
     "passport": "0.4.0",
     "passport-jwt": "4.0.0",
     "pg": "8.0.3",
-    "pm2": "3.0.4"
+    "pm2": "3.0.4",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "nodemon": "1.18.4"

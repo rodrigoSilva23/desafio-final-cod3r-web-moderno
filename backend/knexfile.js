@@ -1,17 +1,18 @@
-// Update with your config settings.
+require('dotenv').config()
 
+// Update with your config settings.
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
 module.exports = {
   
-  client:'pg',
+  client:process.env.DB_CLIENT,
   connection:{
-    host:'0.0.0.0',
-    user:'postgres',
-    port:5432,
-    password:'123456',
-    database:'knowledge'
+    host:process.env.DB_HOST,
+    user:process.env.DB_USERNAME,
+    port:process.env.DB_PORT,
+    password:process.env.DB_PASSWORD,
+    database:process.env.DB_DATABASE
   },
   pool:{
     min:2,
