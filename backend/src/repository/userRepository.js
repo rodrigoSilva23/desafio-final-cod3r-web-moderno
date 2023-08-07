@@ -44,5 +44,7 @@ module.exports = (app) => {
     const keys = Object.keys(data)
     return await db("users").where("id", id).returning(["id",...keys]).update(data);
   };
+
+ 
   return { create, findOne, findAll, update };
 };

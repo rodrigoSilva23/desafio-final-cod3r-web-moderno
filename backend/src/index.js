@@ -3,6 +3,7 @@ const consign = require("consign");
 const db = require("./config/db");
 app.db = db;
 consign()
+  .include("src/config/passport.js")
   .then("src/config/middlewares.js")
   .then("src/repository")
   .then("src/services")
