@@ -16,4 +16,17 @@ module.exports = (app) => {
     .all(authenticate)
     .put(patch.userController.update)
     .get(patch.userController.findOne);
+
+    app
+    .route("/categories")
+    .all(authenticate)
+    .post(patch.categoryController.create)
+    .get(patch.categoryController.findAll);
+
+  app
+    .route("/categories/:id")
+    .all(authenticate)
+    .put(patch.categoryController.update)
+    .get(patch.categoryController.findOne)
+    .delete(patch.categoryController.remove);
 };

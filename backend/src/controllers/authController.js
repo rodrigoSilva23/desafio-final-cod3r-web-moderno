@@ -10,13 +10,15 @@ module.exports = (app) => {
     try {
       const dataValidated = await loginValidation(req.body);
       const authValidated = await authValidation(dataValidated);
-      console.log(authValidated)
       res.status(201).send(authValidated);
     } catch (validationErrors) {
-      const errorsJson = validationErrors.inner.reduce((errors, err) => {
-        return { ...errors, [err.path]: err.message };
-      }, {});
-      res.status(400).send(errorsJson);
+      if (validationErrors) {
+        const errorsJson = validationErrors.inner.reduce((errors, err) => {
+          return { ...errors, [err.path]: err.message };
+        }, {});
+        res.status(400).send(errorsJson);
+      }
+      res.status(500).send("internal server error");
     }
   };
 
@@ -32,8 +34,8 @@ module.exports = (app) => {
       }
       return res.send(false);
     } catch (e) {
-      console.log(e);
+      res.status(500).send("internal server error");
     }
   };
-  return { signin,validateToken };
+  return { signin, validateToken };
 };
