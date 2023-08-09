@@ -8,44 +8,58 @@ module.exports = (app) => {
   var userService = app?.src.services.userService;
   const create = async (req, res, next) => {
     try {
-      const result = await userCreateValidation(req.body);
-      userService.create(result);
+      const inputValidated = await userCreateValidation(req.body);
+      userService.create(inputValidated);
       res.status(201).send("user created successfully");
     } catch (validationErrors) {
-      const errorsJson = validationErrors.inner.reduce((errors, err) => {
-        return { ...errors, [err.path]: err.message };
-      }, {});
-      res.status(400).send(errorsJson);
+      if (validationErrors.inner) {
+        const errorsJson = validationErrors.inner.reduce((errors, err) => {
+          return { ...errors, [err.path]: err.message };
+        }, {});
+        res.status(400).send(errorsJson);
+      }
+      res.status(500).send("internal server error");
     }
   };
   const findOne = async (req, res, next) => {
     try {
       const id = req?.params?.id;
-      const isValidated = await IsUserIdValidation(id);
-      result = await userService.findOne(isValidated.id);
+      const inputValidated = await IsUserIdValidation(id);
+      result = await userService.findOne(inputValidated.id);
       res.send(result);
     } catch (validationError) {
-      dataError = {
-        [validationError.path]: validationError.message,
-      };
-      res.status(400).send(dataError);
+      if (validationError) {
+        dataError = {
+          [validationError.path]: validationError.message,
+        };
+        res.status(400).send(dataError);
+      }
+      res.status(500).send("internal server error");
     }
   };
   const findAll = async (req, res, next) => {
-    const results = await userService.findAll();
-    res.send(results);
+    try {
+      const results = await userService.findAll();
+      res.send(results);
+    } catch (error) {
+      res.status(500).send("internal server error");
+    }
   };
   const update = async (req, res, next) => {
     try {
-      const isValidated = await userPutValidation(req);
+      const inputValidated = await userPutValidation(req);
       const id = +req?.params?.id;
-      const result = await userService.update(id, isValidated);
+      const result = await userService.update(id, inputValidated);
       res.send(result);
     } catch (validationErrors) {
-      const errorsJson = validationErrors.inner.reduce((errors, err) => {
-        return { ...errors, [err.path]: err.message };
-      }, {});
-      res.status(400).send(errorsJson);
+      if (validationErrors.inner) {
+        const errorsJson = validationErrors.inner.reduce((errors, err) => {
+          return { ...errors, [err.path]: err.message };
+        }, {});
+
+        return res.status(400).send(errorsJson);
+      }
+      res.status(500).send("internal server error");
     }
   };
   return { create, findOne, findAll, update };

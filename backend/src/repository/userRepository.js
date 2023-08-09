@@ -4,7 +4,8 @@ module.exports = (app) => {
     try {
       return db("users").insert(data);
     } catch (e) {
-      console.log(e);
+      console.error(e);
+      throw new Error("Internal Server Error");
     }
   };
   const findOne = async (id) => {
@@ -22,7 +23,8 @@ module.exports = (app) => {
         .where("id", id)
         .first();
     } catch (e) {
-      console, log(e);
+      console.error(e);
+      throw new Error("Internal Server Error");
     }
   };
   const findAll = async () => {
@@ -37,12 +39,19 @@ module.exports = (app) => {
         "updated_at"
       );
     } catch (e) {
-      console, log(e);
+      console.error(e);
+      throw new Error("Internal Server Error");
     }
   };
   const update = async (id, data) => {
-    const keys = Object.keys(data)
-    return await db("users").where("id", id).returning(["id",...keys]).update(data);
+    try {
+      
+      const keys = Object.keys(data)
+      return await db("users").where("id", id).returning(["id",...keys]).update(data);
+    } catch (e) {
+      console.error(e);
+      throw new Error("Internal Server Error");
+    }
   };
 
  
