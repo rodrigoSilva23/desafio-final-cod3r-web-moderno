@@ -8,7 +8,7 @@ exports.up = function (knex) {
     table.string("name").notNull();
     table.string("description", 1000).notNull();
     table.string("imageUrl", 1000).notNull();
-    table.binary("content ").notNull();
+    table.binary("content").notNull();
     table.integer("userId").references("id").inTable("users");
     table
       .integer("categoryId")
