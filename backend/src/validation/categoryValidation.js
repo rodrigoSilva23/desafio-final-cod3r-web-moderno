@@ -16,11 +16,11 @@ const categoryCreateValidation = async (data) => {
       }),
     parentId: number()
       .integer()
-      .test("hasParentId", "parentId does not exist", async (value) => {
+      .test("hasParentId", "id does not exist", async (value) => {
         if (Number.isInteger(value)) {
           const hasParentId = await db("categories")
             .select()
-            .where("parentId", value)
+            .where("id", value)
             .first();
           return hasParentId;
         }

@@ -16,5 +16,30 @@ module.exports = (app) => {
   const remove = async (id) => {
     return await categoryRepository.remove(id);
   };
-  return { create, findOne, findAll, update, remove };
+  const categoriesWithPath = async () => {
+    const categories = await findAll();
+
+    const getParent = (parentId) =>
+      categories.find((p) => p.id === parentId) || null;
+
+    const dataCategories = categories.map((category) => {
+      let path = category.name;
+      let parent = getParent(category.parentId);
+
+      while (parent) {
+        path = `${parent.name} > ${path}`;
+        parent = getParent(parent.parentId);
+      }
+
+      return { ...category, path };
+    });
+
+    const orderCategories = dataCategories.sort((a, b) =>
+      a.path.localeCompare(b.path)
+    );
+
+    return orderCategories;
+  };
+
+  return { create, findOne, findAll, update, remove, categoriesWithPath };
 };

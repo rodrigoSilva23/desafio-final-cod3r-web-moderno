@@ -14,7 +14,6 @@ module.exports = (app) => {
       await categoryService.create(inputValidated);
       return res.status(201).send("user created successfully");
     } catch (validationErrors) {
-      console.log(validationErrors);
       if (validationErrors.inner) {
         const errorsJson = validationErrors.inner.reduce((errors, err) => {
           return { ...errors, [err.path]: err.message };
@@ -81,5 +80,14 @@ module.exports = (app) => {
       res.status(500).send("internal server error");
     }
   };
-  return { create, findOne, findAll, update, remove };
+
+  const categoriesWithPath = async (req, res, next) => {
+    try {
+      const results = await categoryService.categoriesWithPath();
+      res.send(results);
+    } catch (error) {
+      res.status(500).send("internal server error");
+    }
+  };
+  return { create, findOne, findAll, update, remove,categoriesWithPath };
 };

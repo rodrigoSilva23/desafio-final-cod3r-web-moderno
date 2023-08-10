@@ -46,5 +46,5 @@ module.exports = (app) => {
     }
   };
 
-  return { create, findOne, findAll, update ,remove};
+  return { create, findOne, findAll, update, remove };
 };
