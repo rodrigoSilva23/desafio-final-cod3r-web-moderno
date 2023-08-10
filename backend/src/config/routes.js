@@ -26,6 +26,10 @@ module.exports = (app) => {
     .route("/categories/categoriesWithPath")
     .all(authenticate)
     .get(patch.categoryController.categoriesWithPath);
+    app
+    .route("/categories/categoriesByTree")
+    .all(authenticate)
+    .get(patch.categoryController.categoriesByTree);
   app
     .route("/categories/:id")
     .all(authenticate)

@@ -40,6 +40,26 @@ module.exports = (app) => {
 
     return orderCategories;
   };
-
-  return { create, findOne, findAll, update, remove, categoriesWithPath };
+  const categoriesByTree = async () => {
+    const categories = await findAll();
+    const toTree = (tree) => {
+      if (!tree) tree = categories.filter((c) => !c.parentId);
+      tree = tree.map((parentNode) => {
+        const children = categories.filter((c) => c.parentId === parentNode.id);
+        parentNode.children = toTree(children);
+        return parentNode;
+      });
+      return tree;
+    };
+    return toTree();
+  };
+  return {
+    create,
+    findOne,
+    findAll,
+    update,
+    remove,
+    categoriesWithPath,
+    categoriesByTree,
+  };
 };

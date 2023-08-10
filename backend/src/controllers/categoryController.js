@@ -89,5 +89,21 @@ module.exports = (app) => {
       res.status(500).send("internal server error");
     }
   };
-  return { create, findOne, findAll, update, remove,categoriesWithPath };
+  const categoriesByTree = async (req, res, next) => {
+    try {
+      const results = await categoryService.categoriesByTree();
+      res.send(results);
+    } catch (error) {
+      res.status(500).send("internal server error");
+    }
+  };
+  return {
+    create,
+    findOne,
+    findAll,
+    update,
+    remove,
+    categoriesWithPath,
+    categoriesByTree,
+  };
 };
