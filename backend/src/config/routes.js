@@ -17,16 +17,16 @@ module.exports = (app) => {
     .put(patch.userController.update)
     .get(patch.userController.findOne);
 
-    app
+  app
     .route("/categories")
     .all(authenticate)
     .post(patch.categoryController.create)
     .get(patch.categoryController.findAll);
-    app
+  app
     .route("/categories/categoriesWithPath")
     .all(authenticate)
     .get(patch.categoryController.categoriesWithPath);
-    app
+  app
     .route("/categories/categoriesByTree")
     .all(authenticate)
     .get(patch.categoryController.categoriesByTree);
@@ -36,4 +36,16 @@ module.exports = (app) => {
     .put(patch.categoryController.update)
     .get(patch.categoryController.findOne)
     .delete(patch.categoryController.remove);
+  app
+    .route("/articles")
+    .all(authenticate)
+    .post(patch.articlesController.create)
+    .get(patch.articlesController.findAll);
+  
+  app
+    .route("/articles/:id")
+    .all(authenticate)
+    .put(patch.articlesController.update)
+    .get(patch.articlesController.findOne)
+    .delete(patch.articlesController.remove);
 };
