@@ -1,3 +1,4 @@
+const admin = require('./rulesAccess');
 module.exports = (app) => {
   const patch = app.src.controllers;
   const authenticate = app.src.config.passport.authenticate();
@@ -8,20 +9,20 @@ module.exports = (app) => {
   app
     .route("/users")
     .all(authenticate)
-    .post(patch.userController.create)
-    .get(patch.userController.findAll);
+    .post(admin(patch.userController.create))
+    .get(admin(patch.userController.findAll));
 
   app
     .route("/users/:id")
     .all(authenticate)
-    .put(patch.userController.update)
-    .get(patch.userController.findOne);
+    .put(admin(patch.userController.update))
+    .get(admin(patch.userController.findOne));
 
   app
     .route("/categories")
     .all(authenticate)
-    .post(patch.categoryController.create)
-    .get(patch.categoryController.findAll);
+    .post(admin(patch.categoryController.create))
+    .get(admin(patch.categoryController.findAll));
   app
     .route("/categories/categoriesWithPath")
     .all(authenticate)
@@ -33,21 +34,21 @@ module.exports = (app) => {
   app
     .route("/categories/:id")
     .all(authenticate)
-    .put(patch.categoryController.update)
+    .put(admin(patch.categoryController.update))
     .get(patch.categoryController.findOne)
-    .delete(patch.categoryController.remove);
+    .delete(admin(patch.categoryController.remove));
   app
     .route("/articles")
     .all(authenticate)
-    .post(patch.articlesController.create)
-    .get(patch.articlesController.findAll);
+    .post(admin(patch.articlesController.create))
+    .get(admin(patch.articlesController.findAll));
   
   app
     .route("/articles/:id")
     .all(authenticate)
-    .put(patch.articlesController.update)
+    .put(admin(patch.articlesController.update))
     .get(patch.articlesController.findOne)
-    .delete(patch.articlesController.remove);
+    .delete(admin(patch.articlesController.remove));
   app
     .route("/categories/:id/articles")
     .all(authenticate)
