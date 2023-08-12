@@ -17,5 +17,8 @@ module.exports = (app) => {
   const remove = async (id) => {
     return await articlesRepository.remove(id);
   };
-  return { create, findOne, findAll, update,remove };
+  const articlesByCategory = async (data) => {
+    return await articlesRepository.articlesByCategory(data);
+  };
+  return { create, findOne, findAll, update, remove, articlesByCategory };
 };

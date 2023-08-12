@@ -48,4 +48,8 @@ module.exports = (app) => {
     .put(patch.articlesController.update)
     .get(patch.articlesController.findOne)
     .delete(patch.articlesController.remove);
+  app
+    .route("/categories/:id/articles")
+    .all(authenticate)
+    .get(patch.articlesController.articlesByCategory)
 };

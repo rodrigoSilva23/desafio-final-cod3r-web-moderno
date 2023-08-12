@@ -3,6 +3,7 @@ const {
   articlesIdValidation,
   articlesPutValidation,
   articlesPageValidation,
+  articlesCategoryIdValidation
 } = require("../validation/articlesValidation");
 
 module.exports = (app) => {
@@ -41,7 +42,7 @@ module.exports = (app) => {
   const findAll = async (req, res, next) => {
     try {
       queryValidated = await articlesPageValidation(req.query);
-       results = await articlesService.findAll(queryValidated);
+      results = await articlesService.findAll(queryValidated);
       res.send(results);
     } catch (validationErrors) {
       if (validationErrors.inner) {
@@ -86,5 +87,24 @@ module.exports = (app) => {
       res.status(500).send("internal server error");
     }
   };
-  return { create, findOne, findAll, update, remove };
+  const articlesByCategory = async (req, res, next) => {
+    try {
+      const id = req?.params?.id;
+      const inputValidated = await articlesCategoryIdValidation(id);
+      const paginationValidated = await articlesPageValidation(req.query);
+      const data = { ...inputValidated, ...paginationValidated };
+      console.log(data);
+      result = await articlesService.articlesByCategory(data);
+      res.send(result);
+    } catch (validationError) {
+      if (validationError.inner) {
+        dataError = {
+          [validationError.path]: validationError.message,
+        };
+        return res.status(400).send(dataError);
+      }
+      res.status(500).send("internal server error");
+    }
+  };
+  return { create, findOne, findAll, update, remove, articlesByCategory };
 };

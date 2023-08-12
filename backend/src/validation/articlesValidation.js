@@ -135,10 +135,23 @@ const articlesPageValidation = async (data) => {
 
   return validatedData;
 };
+const articlesCategoryIdValidation = async (id) => {
+  const userSchema = object({
+    id: number()
+      .required()
+      .test("hasId", "id does not exist", async (value) => {
+        const hasId = await db("categories").select().where("id", value).first();
+        return hasId;
+      }),
+  });
+  const validatedData = await userSchema.validate({ id });
 
+  return validatedData;
+};
 module.exports = {
   articlesCreateValidation,
   articlesIdValidation,
   articlesPutValidation,
   articlesPageValidation,
+  articlesCategoryIdValidation
 };
