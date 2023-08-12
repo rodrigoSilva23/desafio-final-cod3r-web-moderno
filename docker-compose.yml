@@ -1,9 +1,5 @@
 version: "3.9"
 
-volumes:
-  db-data:
-
-
 services:
   backend:
     image: cod3r-backend
@@ -35,6 +31,18 @@ services:
       - db-data:/var/lib/postgresql/data
     networks:
       - cod3r-network
+  mongo_db:
+    container_name: mongo_db
+    image: mongo:latest
+    restart: always
+    volumes:
+      - mongo_db:/data/db
+    depends_on:
+      - db
 networks:
   cod3r-network:
     driver: bridge
+
+volumes:
+  db-data:
+  mongo_db: {}
