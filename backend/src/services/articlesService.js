@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt-nodejs");
 module.exports = (app) => {
-  var articlesRepository = app?.src.repository.articlesRepository;
+  var articlesRepository = app?.src.repositories.articlesRepository;
   const create = (data) => {
     return articlesRepository.create(data);
   };

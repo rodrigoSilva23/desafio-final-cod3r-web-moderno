@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt-nodejs");
 module.exports = (app) => {
-  var userRepository = app?.src.repository.userRepository;
+  var userRepository = app?.src.repositories.userRepository;
   const create = (data) => {
     const salt = bcrypt.genSaltSync(10);
     data["password"] = bcrypt.hashSync(data.password, salt);

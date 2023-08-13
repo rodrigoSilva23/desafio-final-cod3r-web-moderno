@@ -1,5 +1,5 @@
 module.exports = (app) => {
-  var categoryRepository = app?.src.repository.categoryRepository;
+  var categoryRepository = app?.src.repositories.categoryRepository;
   const create = async (data) => {
     return await categoryRepository.create(data);
   };
