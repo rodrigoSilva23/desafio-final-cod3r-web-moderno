@@ -1,4 +1,4 @@
-Select Language: **English**, [Portuguese](https://github.com/AnisanWesley/anisan-college/blob/master/Anisoket/README-pt.md)
+Select Language: **English**, [Portuguese](https://github.com/rodrigoSilva23/desafio-final-cod3r-web-moderno/blob/main/README-pt.md)
 desafio-final-cod3r-web-moderno
 
 # challenges!
