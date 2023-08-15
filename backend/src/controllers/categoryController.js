@@ -10,9 +10,8 @@ module.exports = (app) => {
   const create = async (req, res, next) => {
     try {
       const inputValidated = await categoryCreateValidation(req.body);
-
       await categoryService.create(inputValidated);
-      return res.status(201).send("user created successfully");
+      return res.status(201).send("category created successfully");
     } catch (validationErrors) {
       if (validationErrors.inner) {
         const errorsJson = validationErrors.inner.reduce((errors, err) => {
@@ -49,10 +48,11 @@ module.exports = (app) => {
   };
   const update = async (req, res, next) => {
     try {
-      const inputValidated = await categoryPutValidation(req);
       const id = +req?.params?.id;
+      const inputValidated = await categoryPutValidation(req);
+      console.log(inputValidated);
       result = await categoryService.update(id, inputValidated);
-      res.send(result);
+      res.send(result[0]);
     } catch (validationErrors) {
       if (validationErrors.inner) {
         const errorsJson = validationErrors.inner.reduce((errors, err) => {

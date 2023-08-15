@@ -2,16 +2,27 @@ const app = require("express")();
 const consign = require("consign");
 const db = require("./config/db");
 const mongoose = require("mongoose");
+const swaggerUI = require("swagger-ui-express");
+const docs = require('./docs');
 require("./config/mongodb");
+
 app.db = db;
 app.mongoose = mongoose;
+const PORT = process.env.PORT || 3000;
 consign()
   .include("src/config/passport.js")
   .then("src/config/middlewares.js")
-  .then("src/repository")
+  .then("src/repositories")
   .then("src/services")
   .then("src/controllers")
+  .then("src/schedules")
   .then("src/config/routes.js")
   .into(app);
 
-app.listen(3000, () => console.log("Backend executando..."));
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(docs));
+
+async function initialize() {
+  app.listen(PORT);
+}
+
+initialize().finally(() => console.log(`app started on port:${PORT}`));

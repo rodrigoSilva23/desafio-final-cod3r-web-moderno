@@ -24,10 +24,12 @@ const categoryCreateValidation = async (data) => {
             .first();
           return hasParentId;
         }
+        return true;
       }),
   });
   const validatedData = await userSchema.validate(data, {
     abortEarly: false,
+    stripUnknown: true
   });
   return validatedData;
 };
@@ -55,18 +57,23 @@ const categoryPutValidation = async (data) => {
             .first();
           return hasParentId;
         }
+        return true;
       })
       .test(
         "hasParentId",
         "cannot associate a parentId with itself. Please choose a different parent for this entity.",
         async (value, props) => {
-          const { id } = props.parent;
-          if (id === value) return true;
+          if (Number.isInteger(value)) {
+            const { id } = props?.parent;
+            if (id === value) return false;
+          }
+          return true;
         }
       ),
   });
   validatedData = await userSchema.validate(data.body, {
     abortEarly: false,
+    stripUnknown: true
   });
   return validatedData;
 };
@@ -93,25 +100,34 @@ const categoryRemoveValidation = async (id) => {
       .required()
       .test("hasId", "id does not exist", async (value) => {
         const hasId = await db("categories")
-        .select()
-        .where("id", value)
-        .first();
-        return hasId;
-      })
-      .test("hasSubcategory", "Unable to delete a category linked to subcategories", async (value) => {
-        const hasSubcategory = await db("categories")
           .select()
-          .where("parentId", value)
+          .where("id", value)
           .first();
-        return !hasSubcategory;
+        return Boolean(hasId);
       })
-      .test("hasCategory", "Unable to delete a category linked to articles", async (value) => {
-        const hasCategory = await db("articles")
-          .select()
-          .where("categoryId", value)
-          .first();
-        return !hasCategory;
-      }),
+      .test(
+        "hasSubcategory",
+        "Unable to delete a category linked to subcategories",
+        async (value) => {
+          const hasSubcategory = await db("categories")
+            .select()
+            .where("parentId", value)
+            .first();
+        
+          return !hasSubcategory;
+        }
+      )
+      .test(
+        "hasCategory",
+        "Unable to delete a category linked to articles",
+        async (value) => {
+          const hasCategory = await db("articles")
+            .select()
+            .where("categoryId", value)
+            .first();
+          return !hasCategory;
+        }
+      ),
   });
   const validatedData = await userSchema.validate({ id });
 
@@ -121,5 +137,5 @@ module.exports = {
   categoryCreateValidation,
   categoryIdValidation,
   categoryPutValidation,
-  categoryRemoveValidation
+  categoryRemoveValidation,
 };
