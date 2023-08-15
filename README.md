@@ -68,6 +68,7 @@ This will give you an overview of all endpoints available in your API.
 <p>
  Explore the routes listed to understand the different endpoints and features your API offers. Each route will have its description and supported HTTP methods, such as GET, POST, PUT, DELETE, among others.
 </p>
+
 ## possible errors
 
 There is a chance that a permission error will occur when running the docker-compose up command. To fix this, you can give the product and intent scripts execute permissions.
