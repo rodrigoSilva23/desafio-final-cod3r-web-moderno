@@ -31,12 +31,14 @@ services:
       - db-data:/var/lib/postgresql/data
     networks:
       - cod3r-network
-  mongo_db:
+  mongodb:
     container_name: mongo_db
     image: mongo:latest
     restart: always
     volumes:
-      - mongo_db:/data/db
+      - mongodb:/data/db
+    ports:
+      - "27017:27017"
     depends_on:
       - db
 networks:
@@ -45,4 +47,4 @@ networks:
 
 volumes:
   db-data:
-  mongo_db: {}
+  mongodb: {}
