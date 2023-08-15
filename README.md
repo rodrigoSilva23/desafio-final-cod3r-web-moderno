@@ -22,7 +22,7 @@ Here is the improved version of the base code ([versao-final](https://github.com
 - articles
   - ['create','get', 'update','delete' ] articles
   - find article by category
-  - categories with patch
+
 
 ## Technologies Used
 
