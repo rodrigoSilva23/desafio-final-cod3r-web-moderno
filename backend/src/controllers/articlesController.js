@@ -12,7 +12,7 @@ module.exports = (app) => {
     try {
       const inputValidated = await articlesCreateValidation(req.body);
       articlesService.create(inputValidated);
-      res.status(201).send("user created successfully");
+      res.status(201).send("article created successfully");
     } catch (validationErrors) {
       if (validationErrors.inner) {
         const errorsJson = validationErrors.inner.reduce((errors, err) => {
@@ -58,8 +58,8 @@ module.exports = (app) => {
     try {
       const inputValidated = await articlesPutValidation(req);
       const id = +req?.params?.id;
-      const result = await articlesService.update(id, inputValidated);
-      res.send(result[0]);
+      await articlesService.update(id, inputValidated);
+      res.send("success");
     } catch (validationErrors) {
       if (validationErrors.inner) {
         const errorsJson = validationErrors.inner.reduce((errors, err) => {
@@ -93,7 +93,7 @@ module.exports = (app) => {
       const inputValidated = await articlesCategoryIdValidation(id);
       const paginationValidated = await articlesPageValidation(req.query);
       const data = { ...inputValidated, ...paginationValidated };
-      console.log(data);
+
       result = await articlesService.articlesByCategory(data);
       res.send(result);
     } catch (validationError) {

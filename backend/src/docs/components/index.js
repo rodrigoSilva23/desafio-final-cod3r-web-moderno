@@ -1,12 +1,14 @@
 const login = require("./login")
 const categories = require("./categories")
 const users = require("./users")
+const articles = require("./articles")
 module.exports = {
   components: {
     schemas: {
       ...login,
       ...users,
-      ...categories
+      ...categories,
+      ...articles
     },
     securitySchemes: {
       bearerAuth: {

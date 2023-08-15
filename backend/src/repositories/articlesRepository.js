@@ -87,7 +87,7 @@ module.exports = (app) => {
         .whereRaw("??=??", ["u.id", "a.userId"])
         .whereIn("categoryId", categories)
         .offset(offset);
-      return { data: articles, count: parseInt(count), limit };
+      return { data: articles, count: parseInt(count), limit, page };
     } catch (e) {
       console.error(e);
       throw new Error("Internal Server Error");

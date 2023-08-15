@@ -26,8 +26,8 @@ module.exports = (app) => {
     const userData = req.body || null;
     try {
       if (userData) {
-        const token = jwt.encode(userData, authSecret);
-        const tokenExpiry = token.exp * 1000;
+       // const token = jwt.encode(userData, authSecret);
+        const tokenExpiry = userData.exp * 1000;
         if (tokenExpiry > new Date()) {
           return res.send(true);
         }
