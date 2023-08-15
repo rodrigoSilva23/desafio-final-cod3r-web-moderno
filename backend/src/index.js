@@ -20,6 +20,12 @@ consign()
   .into(app);
 
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(docs));
+app.get("/swagger", (req,res)=>{
+  return  res.json(docs)
+});
+app.get("/docs", (req,res)=>{
+  return  res.sendFile(process.cwd() + "/src/views/docs/index.html")
+});
 
 async function initialize() {
   app.listen(PORT);

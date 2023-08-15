@@ -1,10 +1,10 @@
-const categories = require('./categories');
-const login = require('./login');
+const categories = require("./categories");
+const login = require("./login");
+const users = require("./users");
 module.exports = {
-   
-    "paths":{
-        ...login,
-        ... categories
-
-    }
-}
+  paths: {
+    ...login,
+    ...users,
+    ...categories,
+  },
+};

@@ -5,7 +5,7 @@ module.exports = (app) => {
 
   app.route("/api/v1/signin").post(patch.authController.signin);
   // app.route("/signup").post(patch.authController.signin);
-  app.route("/api/v1/validate-token").post(patch.authController.validateToken);
+  app.route("/api/v1/validateToken").post(patch.authController.validateToken);
   app
     .route("/api/v1/users")
     .all(authenticate)

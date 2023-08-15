@@ -50,7 +50,7 @@ module.exports = (app) => {
       const inputValidated = await userPutValidation(req);
       const id = +req?.params?.id;
       const result = await userService.update(id, inputValidated);
-      res.send(result);
+      res.send("success");
     } catch (validationErrors) {
       if (validationErrors.inner) {
         const errorsJson = validationErrors.inner.reduce((errors, err) => {
