@@ -11,6 +11,7 @@ const loginValidation = async (data) => {
   });
   const validatedData = await userSchema.validate(data, {
     abortEarly: false,
+    stripUnknown: true
   });
   return validatedData;
 };
@@ -47,6 +48,7 @@ const authValidation = async (data) => {
 
   await userSchema.validate(data, {
     abortEarly: false,
+    stripUnknown: true
   });
   return {
     ...payload,

@@ -19,7 +19,6 @@ module.exports = (app) => {
         const salt = bcrypt.genSaltSync(10);
         data["password"] = bcrypt.hashSync(data.password, salt);
       }
-      console.log(data);
       return await userRepository.update(id, data);
     } catch (error) {
       console.log(error);

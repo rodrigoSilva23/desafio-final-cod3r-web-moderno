@@ -26,6 +26,7 @@ const userCreateValidation = async (data) => {
     data,
     {
       abortEarly: false,
+      stripUnknown: true
     }
   );
   return validatedData;
@@ -64,6 +65,7 @@ const userPutValidation = async (data) => {
     data.body,
     {
       abortEarly: false,
+      stripUnknown: true
     }
   );
   return validatedData;

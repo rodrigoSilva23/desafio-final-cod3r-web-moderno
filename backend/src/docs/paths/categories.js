@@ -48,9 +48,7 @@ module.exports = {
             },
           },
         },
-        401: {
-          description: "Internal Server Error",
-        },
+  
         500: {
           description: "Internal Server Error",
         },
@@ -190,9 +188,6 @@ module.exports = {
             },
           },
         },
-        401: {
-          description: "Internal Server Error",
-        },
         500: {
           description: "Internal Server Error",
         },
@@ -218,9 +213,6 @@ module.exports = {
               },
             },
           },
-        },
-        401: {
-          description: "Internal Server Error",
         },
         500: {
           description: "Internal Server Error",
